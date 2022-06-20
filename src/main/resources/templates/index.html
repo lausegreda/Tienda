@@ -5,31 +5,49 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <!--<h1>Un cliente</h1>
-        <p>Nombre: <span th:text="${cliente.nombre}"></span></p> <!--<p th:text="${mensaje}"></p> <! para atributos del modelo se coloca entre comillas, signo dólar y corchetes 
+        <!-- <h1>Un cliente</h1>
+        <p>Nombre: <span th:text="${cliente.nombre}"></span></p> p th:text="${mensaje}"></p> <!-- para atributos del modelo se coloca entre comillas, signo dólar y corchetes 
         <p>Apellidos: <span th:text="${cliente.apellidos}"></span></p>
         <p>Correo: <span th:text="${cliente.correo}"></span></p>
         <p>Teléfono: <span th:text="${cliente.telefono}"></span></p>
         <br>
+        <br>
+        <h1>Lista de clientes</h1>
+        <a th:href="@{/nuevoCliente}">Nuevo Cliente</a>
+        <br>
         <br>-->
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Correo</th>
-                    <th>Teléfono</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="item : ${clientes}"> <!<!-- item variable temporal en cada iteración -->
-                    <td th:text="${item.nombre}"></td>
-                    <td th:text="${item.apellidos}"></td>
-                    <td th:text="${item.correo}"></td>
-                    <td th:text="${item.telefono}"></td>
-                </tr>
-            </tbody>
-        </table>
-
+        <header th:replace="layout/plantilla ::header"/>
+        <h2>Lista de clientes</h2>
+        <a th:href="@{/nuevoCliente}">Nuevo Cliente</a> <!-- @ es para acciones que estén en el controller -->
+        <br>
+        <br>
+        <div th:if="${clientes != null and !clientes.empty}"> <!-- $ para propiedades dentro del model -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${clientes}"> <!<!-- item variable temporal en cada iteración -->
+                        <td th:text="${item.nombre}"></td>
+                        <td th:text="${item.apellidos}"></td>
+                        <td th:text="${item.correo}"></td>
+                        <td th:text="${item.telefono}"></td>
+                        <td><a th:href="@{/modificarCliente/} + ${item.idCliente}">Modificar</a></td>
+                        <td><a th:href="@{/eliminarCliente/} + ${item.idCliente}">Eliminar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${clientes == null and clientes.empty}">
+            No tenemos lista de clientes para mostrar.
+        </div>
+        <footer th:replace="layout/plantilla ::footer"/>    
     </body>
 </html>
