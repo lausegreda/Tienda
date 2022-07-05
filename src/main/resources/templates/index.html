@@ -3,51 +3,34 @@
     <head>
         <title>Tech Shop</title>
         <meta charset="UTF-8">
+        <link th:href="@{../static/CSS/menu.css}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <!-- <h1>Un cliente</h1>
-        <p>Nombre: <span th:text="${cliente.nombre}"></span></p> p th:text="${mensaje}"></p> <!-- para atributos del modelo se coloca entre comillas, signo dólar y corchetes 
-        <p>Apellidos: <span th:text="${cliente.apellidos}"></span></p>
-        <p>Correo: <span th:text="${cliente.correo}"></span></p>
-        <p>Teléfono: <span th:text="${cliente.telefono}"></span></p>
-        <br>
-        <br>
-        <h1>Lista de clientes</h1>
-        <a th:href="@{/nuevoCliente}">Nuevo Cliente</a>
-        <br>
-        <br>-->
         <header th:replace="layout/plantilla ::header"/>
-        <h2>Lista de clientes</h2>
-        <a th:href="@{/nuevoCliente}">Nuevo Cliente</a> <!-- @ es para acciones que estén en el controller -->
-        <br>
-        <br>
-        <div th:if="${clientes != null and !clientes.empty}"> <!-- $ para propiedades dentro del model -->
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Correo</th>
-                        <th>Teléfono</th>
-                        <th>Modificar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="item : ${clientes}"> <!<!-- item variable temporal en cada iteración -->
-                        <td th:text="${item.nombre}"></td>
-                        <td th:text="${item.apellidos}"></td>
-                        <td th:text="${item.correo}"></td>
-                        <td th:text="${item.telefono}"></td>
-                        <td><a th:href="@{/modificarCliente/} + ${item.idCliente}">Modificar</a></td>
-                        <td><a th:href="@{/eliminarCliente/} + ${item.idCliente}">Eliminar</a></td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <div class="contenido">
+            <h2>Nuestros Articulos</h2>
+            <div th:if="${articulos != null and !articulos.empty}"> 
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${articulos}"> 
+                            <td th:text="${item.descripcion}"></td>
+                            <td th:text="${#numbers.formatDecimal(item.precio, 3, 2)}"></td>
+                            <td><a th:href="@{/carrito/agregar} + ${item.idArticulo}">Agregar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${articulos == null and articulos.empty}">
+                No tenemos lista de articulos para mostrar.
+            </div>
         </div>
-        <div th:if="${clientes == null and clientes.empty}">
-            No tenemos lista de clientes para mostrar.
-        </div>
-        <footer th:replace="layout/plantilla ::footer"/>    
+        <footer th:replace="layout/plantilla::footer"/>
     </body>
 </html>
