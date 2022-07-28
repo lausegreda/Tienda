@@ -17,7 +17,7 @@ public class ClienteController {
     public String inicio(Model model) {
         var clientes = clienteservice.getClientes();
         model.addAttribute("clientes", clientes);
-        return "/clientes/listado";
+        return "/cliente/listado";
     }
 
     @GetMapping("/cliente/nuevo")
@@ -32,7 +32,7 @@ public class ClienteController {
         return "redirect:/cliente/listado";
     }
 
-    @GetMapping("/cliente//modificar/{idCliente}")
+    @GetMapping("/cliente/modificar/{idCliente}")
     public String modificarCliente(Cliente cliente, Model model) {
         cliente = clienteservice.getCliente(cliente);
         model.addAttribute("cliente", cliente);

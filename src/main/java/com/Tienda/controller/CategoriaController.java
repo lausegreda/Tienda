@@ -17,13 +17,13 @@ public class CategoriaController {
     public String inicio(Model model) {
         var categorias = categoriaservice.getCategorias(false); 
         model.addAttribute("categorias", categorias);
-        return "/categorias/listado";
+        return "/categoria/listado";
     }
 
     @GetMapping("/categoria/nuevo")
     public String nuevoCategoria(Categoria categoria) {
 
-        return "categoria/modificar";
+        return "/categoria/modificar";
     }
 
     @PostMapping("/categoria/guardar") //el que se encarga de guardar la info
@@ -32,7 +32,7 @@ public class CategoriaController {
         return "redirect:/categoria/listado";
     }
 
-    @GetMapping("/categoria//modificar/{idCategoria}")
+    @GetMapping("/categoria/modificar/{idCategoria}")
     public String modificarCategoria(Categoria categoria, Model model) {
         categoria = categoriaservice.getCategoria(categoria);
         model.addAttribute("categoria", categoria);

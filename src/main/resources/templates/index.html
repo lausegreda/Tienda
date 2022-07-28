@@ -3,32 +3,34 @@
     <head>
         <title>Tech Shop</title>
         <meta charset="UTF-8">
-        <link th:href="@{../static/CSS/menu.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/menu.css}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <header th:replace="layout/plantilla ::header"/>
 
         <div class="contenido">
-            <h2>Nuestros Articulos</h2>
+            <h2 th:text="#{index.titulo}">Nuestros Articulos</h2>
             <div th:if="${articulos != null and !articulos.empty}"> 
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>Descripción</th>
-                            <th>Precio</th>
+                            <th th:text="#{articulo.descripcion}">Descripción</th>
+                            <th th:text="#{articulo.precio}">Precio</th>
+                            <th th:text="#{articulo.comprar}"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="item : ${articulos}"> 
                             <td th:text="${item.descripcion}"></td>
                             <td th:text="${#numbers.formatDecimal(item.precio, 3, 2)}"></td>
-                            <td><a th:href="@{/carrito/agregar} + ${item.idArticulo}">Agregar</a></td>
+                            <td><a th:href="@{/carrito/agregar} + ${item.idArticulo}"
+                                   th:text="#{accion.agregar}">Agregar</a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div th:if="${articulos == null and articulos.empty}">
-                No tenemos lista de articulos para mostrar.
+                <p th:text="#{articulo.no_mostrar}"></p>
             </div>
         </div>
         <footer th:replace="layout/plantilla::footer"/>
