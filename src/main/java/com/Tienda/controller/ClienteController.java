@@ -13,12 +13,21 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteservice;
 
-    @GetMapping("/cliente/listado")
+   @GetMapping("/cliente/listado")
     public String inicio(Model model) {
-        var clientes = clienteservice.getClientes();
-        model.addAttribute("clientes", clientes);
+        var clientes=clienteservice.getClientes();
+        
+        var limiteTotal=0;
+        for (var c: clientes) {
+            limiteTotal+=c.getCredito().getLimite();
+        }
+        model.addAttribute("limiteTotal",limiteTotal);
+        model.addAttribute("totalClientes",clientes.size());
+        
+        model.addAttribute("clientes",clientes);
         return "/cliente/listado";
     }
+
 
     @GetMapping("/cliente/nuevo")
     public String nuevoCliente(Cliente cliente) {
